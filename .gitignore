@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production & Build Outputs
+dist/
+build/
+client/dist/
+server/dist/
+
+# Environment files and credentials (CRITICAL: NEVER COMMIT REAL SECRETS)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+server/.env
+client/.env
+
+# Allow environment example templates
+!.env.example
+!server/.env.example
+!client/.env.example
+
+# Test & Coverage artifacts
+coverage/
+*.lcov
+.nyc_output
+
+# Logs & Debuggers
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local database clusters & scratch
+.chronos_pg_data/
+*.sqlite
+*.sqlite-journal
+
+# IDE & Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS metadata
+.DS_Store
+Thumbs.db

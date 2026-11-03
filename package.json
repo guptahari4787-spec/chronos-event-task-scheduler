@@ -1,0 +1,24 @@
+{
+  "name": "chronos-event-task-scheduler",
+  "version": "1.0.0",
+  "description": "Chronos — Intelligent Event and Task Scheduling System powered by Merge Sort, Graph Traversal, and Dynamic Programming",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev:server": "npm.cmd --prefix server run dev",
+    "dev:client": "npm.cmd --prefix client run dev",
+    "dev": "npm.cmd run dev:server & npm.cmd run dev:client",
+    "build:server": "npm.cmd --prefix server run build",
+    "build:client": "npm.cmd --prefix client run build",
+    "build": "npm.cmd run build:server && npm.cmd run build:client",
+    "test": "npm.cmd --prefix server run test",
+    "db:migrate": "npm.cmd --prefix server run db:migrate",
+    "db:seed": "npm.cmd --prefix server run db:seed"
+  },
+  "keywords": ["scheduler", "dsa", "dbms", "fullstack", "react", "express", "prisma", "postgresql"],
+  "author": "Chronos Engineering Team",
+  "license": "MIT"
+}

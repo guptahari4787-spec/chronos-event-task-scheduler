@@ -1,0 +1,371 @@
+.root {
+  position: relative;
+  width: 100%;
+  font-family: inherit;
+  color: var(--accent, #1e293b);
+  user-select: none;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.summary {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--text-secondary, #475569);
+}
+
+.total {
+  font-weight: 600;
+  color: var(--accent, #0f172a);
+}
+
+.period {
+  color: var(--text-muted, #64748b);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scroller {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.canvas {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  grid-template-rows: 20px 1fr;
+  gap: 4px;
+  width: max-content;
+  min-width: 100%;
+}
+
+.months {
+  grid-column: 2;
+  position: relative;
+  height: 20px;
+}
+
+.month {
+  position: absolute;
+  left: calc(var(--col) * 15px);
+  font-size: 0.75rem;
+  color: var(--text-muted, #64748b);
+  white-space: nowrap;
+}
+
+.weekdays {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 1px;
+}
+
+.weekday {
+  height: 12px;
+  line-height: 12px;
+  font-size: 0.7rem;
+  color: var(--text-muted, #64748b);
+}
+
+.plot {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  outline: none;
+}
+
+.row {
+  display: flex;
+  gap: 3px;
+}
+
+.cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: #ebedf0;
+  transition: transform 0.15s ease, filter 0.15s ease, background-color 0.2s ease;
+  cursor: pointer;
+  outline: none;
+}
+
+:global(.dark) .cell {
+  background-color: #27272a;
+}
+
+.cell[data-empty] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.cell[data-level="0"] {
+  background-color: #f1f5f9;
+}
+:global(.dark) .cell[data-level="0"] {
+  background-color: #27272a;
+}
+
+.cell[data-level="1"] {
+  background-color: #93c5fd;
+}
+:global(.dark) .cell[data-level="1"] {
+  background-color: #1e3a8a;
+}
+
+.cell[data-level="2"] {
+  background-color: #3b82f6;
+}
+:global(.dark) .cell[data-level="2"] {
+  background-color: #2563eb;
+}
+
+.cell[data-level="3"] {
+  background-color: #1d4ed8;
+}
+:global(.dark) .cell[data-level="3"] {
+  background-color: #3b82f6;
+}
+
+.cell[data-level="4"] {
+  background-color: #1e3a8a;
+}
+:global(.dark) .cell[data-level="4"] {
+  background-color: #60a5fa;
+}
+
+.cell:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+  z-index: 10;
+}
+
+/* Dim other cells on highlight */
+.grid[data-highlight] .cell:not([data-level="0"]) {
+  filter: opacity(0.3);
+}
+
+.grid[data-highlight="0"] .cell[data-level="0"],
+.grid[data-highlight="1"] .cell[data-level="1"],
+.grid[data-highlight="2"] .cell[data-level="2"],
+.grid[data-highlight="3"] .cell[data-level="3"],
+.grid[data-highlight="4"] .cell[data-level="4"] {
+  filter: opacity(1);
+  transform: scale(1.15);
+}
+
+.ring {
+  position: absolute;
+  top: calc(var(--row) * 15px - 2px);
+  left: calc(var(--col) * 15px - 2px);
+  width: 16px;
+  height: 16px;
+  border: 2px solid #0f172a;
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: 0;
+  transition: top 0.15s ease, left 0.15s ease, opacity 0.15s ease;
+}
+
+:global(.dark) .ring {
+  border-color: #ffffff;
+}
+
+.ring[data-shown] {
+  opacity: 1;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted, #64748b);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.caption {
+  font-weight: 500;
+  min-height: 1.25rem;
+}
+
+.captionLong {
+  display: inline;
+}
+
+.captionShort {
+  display: none;
+}
+
+.scale {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legendText {
+  color: var(--text-muted, #64748b);
+}
+
+.swatches {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.swatch {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background-color: #ebedf0;
+  transition: transform 0.15s ease, outline 0.15s ease;
+}
+
+.swatch[data-level="0"] { background-color: #f1f5f9; }
+.swatch[data-level="1"] { background-color: #93c5fd; }
+.swatch[data-level="2"] { background-color: #3b82f6; }
+.swatch[data-level="3"] { background-color: #1d4ed8; }
+.swatch[data-level="4"] { background-color: #1e3a8a; }
+
+:global(.dark) .swatch[data-level="0"] { background-color: #27272a; }
+:global(.dark) .swatch[data-level="1"] { background-color: #1e3a8a; }
+:global(.dark) .swatch[data-level="2"] { background-color: #2563eb; }
+:global(.dark) .swatch[data-level="3"] { background-color: #3b82f6; }
+:global(.dark) .swatch[data-level="4"] { background-color: #60a5fa; }
+
+.swatch:hover, .swatch:focus-visible {
+  transform: scale(1.25);
+  outline: 1.5px solid #2563eb;
+}
+
+.swatch[aria-pressed="true"] {
+  outline: 2px solid #0f172a;
+}
+:global(.dark) .swatch[aria-pressed="true"] {
+  outline-color: #ffffff;
+}
+
+.tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+}
+
+:global(.dark) .bubble {
+  background: #18181b;
+  color: #f4f4f5;
+  border-color: #27272a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.tipBody {
+  display: block;
+}
+
+.tipMeasure {
+  position: absolute;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tipPrimary {
+  font-weight: 600;
+  display: block;
+}
+
+.tipSecondary {
+  display: block;
+  color: #64748b;
+  font-size: 0.7rem;
+}
+:global(.dark) .tipSecondary {
+  color: #a1a1aa;
+}
+
+.tipLines {
+  display: block;
+}
+
+.rollingFrame {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.rolling {
+  display: inline-flex;
+}
+
+.place {
+  display: inline-block;
+  position: relative;
+}
+
+.placeChar {
+  display: inline-block;
+}
+
+.rise {
+  display: inline-block;
+  position: relative;
+}
+
+.riseLine {
+  display: inline-block;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
